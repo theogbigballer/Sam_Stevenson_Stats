@@ -114,7 +114,7 @@ def _find_table_by_schema(
 
 def _read_tables(html: str) -> List[pd.DataFrame]:
     try:
-        return pd.read_html(html)
+        return pd.read_html(html, flavor="html5lib")
     except ValueError:
         return []
 
@@ -710,7 +710,7 @@ def _summarize_opponents(opponent_games: pd.DataFrame) -> List[str]:
 
 
 def parse_profile(html: str) -> Dict[str, str]:
-    soup = BeautifulSoup(html, "lxml")
+    soup = BeautifulSoup(html, "html.parser")
     text = soup.get_text(" ", strip=True)
 
     def extract_field(label: str) -> str:
